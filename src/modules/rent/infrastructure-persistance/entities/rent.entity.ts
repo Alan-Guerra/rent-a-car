@@ -1,17 +1,26 @@
 import { User } from "src/modules/user/infrastructure-persistance/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
-@Entity()
-export class Rent{
-    @PrimaryColumn()
+@Entity({ name: 'Rents'})
+export class Rent {
+    @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    type: string;
+    @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+    startDate: Date;
+
+    @Column({ type: 'datetime' })
+    endDate?: Date;
+
+    @Column({ type: 'datetime' })
+    returnDate?: Date;
 
     @Column()
-    brand: string;
+    approvalStatus: boolean;
 
     @Column()
-    color: string;
+    user: User;
+
+    @Column()
+    admin?: any;
 }
