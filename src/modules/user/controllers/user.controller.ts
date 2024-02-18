@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Delete,
   Put,
+  HttpException,
 } from '@nestjs/common';
 import { UserService } from '../application/service/user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,7 +19,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  createUser(@Body() newUser: CreateUserDto): Promise<User | null> {
+  createUser(@Body() newUser: CreateUserDto): Promise<User | HttpException> {
     return this.userService.createUser(newUser);
   }
 
@@ -28,7 +29,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  getUser(@Param('id', ParseIntPipe) id: number): Promise<User | HttpException> {
     return this.userService.getUser(id);
   }
 
@@ -40,7 +41,7 @@ export class UserController {
   @Put(':id')
   updateUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body() user: UpdateUserDto){
+    @Body() user: UpdateUserDto): Promise<User | HttpException>{
       return this.userService.updateUser(id, user);
     }
 }
