@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Rent } from "src/modules/rent/infrastructure-persistance/entities/rent.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
-@Entity({ name: 'Users'})
+@Entity('Users')
 export class User{
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,7 +11,7 @@ export class User{
 
     @Column()
     password: string;
-
+   
     @Column()
     firstName: string;
 
@@ -19,6 +20,7 @@ export class User{
     
     @Column()
     document: number;
-
-    
+ 
+    @OneToMany(() => Rent, rent => rent.user)
+    rents: Rent[];
 }

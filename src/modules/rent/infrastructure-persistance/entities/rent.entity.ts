@@ -18,9 +18,11 @@ export class Rent {
     @Column()
     approvalStatus: boolean;
 
-    @Column()
+    @ManyToOne(() => User, user => user.rents)
     user: User;
 
+    /*
     @Column()
     admin?: any;
+    */
 }
