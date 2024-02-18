@@ -1,5 +1,5 @@
 import { User } from "src/modules/user/infrastructure-persistance/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({ name: 'Rents'})
 export class Rent {
@@ -18,11 +18,14 @@ export class Rent {
     @Column()
     approvalStatus: boolean;
 
+    @Column()
+    userId: number;
+
     @ManyToOne(() => User, user => user.rents)
     user: User;
 
-    /*
-    @Column()
-    admin?: any;
+    /* 
+   @OneToOne(() => Admin, admin => admin.approvedRents )
+    admin: Admin;
     */
 }
