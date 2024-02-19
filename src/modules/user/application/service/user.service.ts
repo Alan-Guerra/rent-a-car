@@ -48,16 +48,6 @@ export class UserService {
     }
   
     return this.userRepository.delete( { id });
-
-     /* 
-    const result = await this.userRepository.delete({ id });
-
-    if (result.affected === 0){
-      return new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-
-    return result;
-    */
   }
 
   async updateUser(id: number, user: UpdateUserDto): Promise<User | HttpException> {
@@ -68,6 +58,7 @@ export class UserService {
     }
 
     const updatedUser = Object.assign(userFound, user);
-    return this.userRepository.save(updatedUser);
+    await this.userRepository.save(userFound);
+    return updatedUser;
   }
 }
