@@ -14,12 +14,17 @@ export class RentController {
     }
 
     @Get()
-    getAllRents() {
+    getAllRents(): Promise<Rent[]> {
         return this.rentService.getAllRents();
     }
 
     @Put(':id')
-    endRent(@Param('id', ParseIntPipe) id: number){
+    endRent(@Param('id', ParseIntPipe) id: number): Promise<Rent | HttpException>{
         return this.rentService.endRent(id);
+    }
+
+    @Delete(':id')
+    deleteRent(@Param('id', ParseIntPipe) id: number): Promise<Rent | HttpException>{
+        return this.rentService.deleteRent(id);
     }
 }
