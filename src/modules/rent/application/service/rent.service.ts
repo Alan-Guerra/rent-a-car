@@ -20,8 +20,6 @@ export class RentService {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
 
-      // SEARCH ADMIN!!
-
       if (!rent.approvalStatus){
         return new HttpException('Not approved', HttpStatus.CONFLICT);
       }
@@ -34,5 +32,18 @@ export class RentService {
       return this.rentRepository.find();
     }
 
+
+    async endRent(id: number){
+      const rentFound = await this.rentRepository.findOne({where: {id}})
+
+      if (!rentFound){
+        return new HttpException('Rent not found', HttpStatus.NOT_FOUND);
+      }
+
+      rentFound.endDate = new Date();
+      await this.rentRepository.save(rentFound);
+      return rentFound;
+
+    }
 
 }

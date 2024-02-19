@@ -9,10 +9,10 @@ export class Rent {
     @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     startDate: Date;
 
-    @Column({ type: 'datetime' })
+    @Column({ type: 'datetime', nullable: true })
     endDate?: Date;
 
-    @Column({ type: 'datetime' })
+    @Column({ type: 'datetime', nullable: true })
     returnDate?: Date;
 
     @Column()
