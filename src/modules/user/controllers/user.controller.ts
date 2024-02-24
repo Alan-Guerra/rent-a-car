@@ -33,6 +33,11 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
+  @Get('username/:username')
+  getUserByUsername(@Param('username') username: string): Promise<User | HttpException> {
+    return this.userService.getUserByUsername(username);
+  }
+
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.deleteUser(id);
