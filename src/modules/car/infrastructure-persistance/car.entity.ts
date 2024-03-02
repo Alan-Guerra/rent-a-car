@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Rent } from "src/modules/rent/infrastructure-persistance/entities/rent.entity";
 
-@Entity({name: "Car"})
+@Entity({name: "car"})
 export class Car{
     @PrimaryGeneratedColumn()
     id: number;
@@ -12,8 +12,8 @@ export class Car{
     @Column()
     brand: string;
 
-    @Column()
-    image?: string;
+    @Column({nullable: true})
+    image: string;
 
    @OneToMany(() => Rent, rent => rent.car)
     rents: Rent[];
