@@ -1,5 +1,6 @@
+import { Car } from "src/modules/car/infrastructure-persistance/car.entity";
 import { User } from "src/modules/user/infrastructure-persistance/entities/user.entity";
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity({ name: 'Rents'})
 export class Rent {
@@ -24,8 +25,6 @@ export class Rent {
     @ManyToOne(() => User, user => user.rents)
     user: User;
 
-    /* 
-   @OneToOne(() => Admin, admin => admin.approvedRents )
-    admin: Admin;
-    */
+    @ManyToOne(() => Car, car => car.rents)
+    car: Car;
 }

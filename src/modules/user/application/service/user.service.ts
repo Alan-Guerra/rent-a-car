@@ -40,6 +40,16 @@ export class UserService {
     return userFound;
   }
 
+  async getUserByUsername(username: string){
+    const userFound = await this.userRepository.findOne({ where: { username }, relations: ['rents'] });
+  
+    if (!userFound) {
+      return new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+  
+    return userFound;
+  }
+
   async deleteUser(id: number): Promise<DeleteResult | HttpException> {
     const userFound = await this.userRepository.findOne({ where: { id }});
   
