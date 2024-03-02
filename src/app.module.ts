@@ -7,6 +7,7 @@ import { User } from './modules/user/infrastructure-persistance/entities/user.en
 import { Car } from './modules/car/infrastructure-persistance/car.entity';
 import { UserModule } from './modules/user/user.module';
 import { RentModule } from './modules/rent/rent.module';
+import { CarModule } from './modules/car/car.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ import { RentModule } from './modules/rent/rent.module';
       synchronize: true,
       autoLoadEntities: true,
   }),
-  UserModule, RentModule],
+  UserModule, RentModule, CarModule],
   controllers: [AppController],
   providers: [AppService],
 })

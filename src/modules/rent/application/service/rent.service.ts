@@ -11,39 +11,59 @@ export class RentService {
     @InjectRepository(Rent)
     private rentRepository: Repository<Rent>,
     private userService: UserService
-  ) {}
+  ) { }
 
-    async newRent(rent: NewRentDto){
-      const userFound = await this.userService.getUser(rent.userId);
+  async newRent(rent: NewRentDto) {
+    const userFound = await this.userService.getUser(rent.userId);
 
-      if (!userFound){
-        return new HttpException('User not found', HttpStatus.NOT_FOUND);
-      }
-
-      if (!rent.approvalStatus){
-        return new HttpException('Not approved', HttpStatus.CONFLICT);
-      }
-      
-      const newRent = this.rentRepository.create(rent);
-      return await this.rentRepository.save(newRent);
+    if (userFound instanceof HttpException) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    getAllRents(){
-      return this.rentRepository.find();
+    if (!rent.approvalStatus) {
+      throw new HttpException('Not approved', HttpStatus.CONFLICT);
     }
 
+    const newRent = this.rentRepository.create(rent);
+    return await this.rentRepository.save(newRent);
+  }
 
-    async endRent(id: number){
-      const rentFound = await this.rentRepository.findOne({where: {id}})
+  getAllRents() {
+    return this.rentRepository.find({ relations: ['user'] });
+  }
 
-      if (!rentFound){
-        return new HttpException('Rent not found', HttpStatus.NOT_FOUND);
-      }
+  async getRent(id: number) {
+    const rentFound = await this.rentRepository.findOne({ where: { id }, relations: ['user'] });
 
-      rentFound.endDate = new Date();
-      await this.rentRepository.save(rentFound);
-      return rentFound;
-
+    if (!rentFound) {
+      return new HttpException('Rent not found', HttpStatus.NOT_FOUND);
     }
+
+    return rentFound;
+  }
+
+  async endRent(id: number) {
+    const rentFound = await this.rentRepository.findOne({ where: { id } })
+
+    if (!rentFound) {
+      return new HttpException('Rent not found', HttpStatus.NOT_FOUND);
+    }
+
+    rentFound.endDate = new Date();
+    await this.rentRepository.save(rentFound);
+    return rentFound;
+
+  }
+
+  async deleteRent(id: number) {
+    const rentFound = await this.rentRepository.findOne({ where: { id } })
+
+    if (!rentFound) {
+      return new HttpException('Rent not found', HttpStatus.NOT_FOUND);
+    }
+
+    this.rentRepository.delete({ id });
+    return rentFound;
+  }
 
 }

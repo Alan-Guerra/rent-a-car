@@ -10,16 +10,27 @@ export class RentController {
 
     @Post()
     newRent(@Body() newRent: NewRentDto): Promise<Rent | HttpException> {
+        console.log(newRent);
         return this.rentService.newRent(newRent);
     }
 
+    @Get(':id')
+    getRent(@Param('id', ParseIntPipe) id: number): Promise <Rent | HttpException>{
+        return this.rentService.getRent(id);
+    }
+
     @Get()
-    getAllRents() {
+    getAllRents(): Promise<Rent[]> {
         return this.rentService.getAllRents();
     }
 
     @Put(':id')
     endRent(@Param('id', ParseIntPipe) id: number){
         return this.rentService.endRent(id);
+    }
+
+    @Delete(':id')
+    deleteRent(@Param('id', ParseIntPipe) id: number){
+        return this.rentService.deleteRent(id);
     }
 }
