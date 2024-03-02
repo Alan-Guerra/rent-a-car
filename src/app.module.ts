@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Rent } from './modules/rent/infrastructure-persistance/entities/rent.entity';
 import { User } from './modules/user/infrastructure-persistance/entities/user.entity';
+import { Car } from './modules/car/infrastructure-persistance/car.entity';
 import { UserModule } from './modules/user/user.module';
 import { RentModule } from './modules/rent/rent.module';
 
@@ -15,7 +16,7 @@ import { RentModule } from './modules/rent/rent.module';
       username: 'root',
       password: 'rentacarpass',
       database: 'rentacar',
-      entities: [User, Rent],
+      entities: [User, Rent, Car],
       synchronize: true,
       autoLoadEntities: true,
   }),
