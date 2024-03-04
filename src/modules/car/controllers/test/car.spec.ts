@@ -2,7 +2,6 @@ import { HttpStatus, INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { AppModule } from "../../../../app.module";
 import * as request from "supertest"
-import { stringify } from "querystring";
 
 describe('Car - [/car]', () => {
   let app: INestApplication;
