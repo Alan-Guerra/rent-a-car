@@ -50,6 +50,14 @@ describe('User - [/user]', () => {
         })
     })
 
+    describe('Get user - [GET /user]', () => {
+        it('Should return a user', async () => {
+            return request(app.getHttpServer())
+            .get(`/user/${userTest.id}`)
+            .expect(HttpStatus.OK)
+        })
+    })
+
     describe('Update user - [PUT /user]', () => {
         it('Should return a user with changed data', async () => {
             const updatedUser = {
